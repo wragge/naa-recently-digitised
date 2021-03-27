@@ -22,9 +22,9 @@ def get_date_digitised(result):
     when_digitised = result.find('div', class_='card-footer card-footer-list').span.string.strip()
     interval, unit = re.search(r'^Digitised (\d+) (hours|days) ago', when_digitised).groups()
     if unit == 'days':
-        date_digitised = arrow.now().shift(days=-(int(interval)))
+        date_digitised = arrow.now('Australia/Sydney').shift(days=-(int(interval)))
     elif unit == 'hours':
-        date_digitised = arrow.now().shift(hours=-(int(interval)))
+        date_digitised = arrow.now('Australia/Sydney').shift(hours=-(int(interval)))
     return date_digitised.format('YYYY-MM-DD')
 
 def get_records_from_page(page):
