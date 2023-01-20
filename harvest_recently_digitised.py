@@ -11,8 +11,8 @@ def initialise_browser():
     '''
     browser = mechanicalsoup.StatefulBrowser()
     browser.open('https://recordsearch.naa.gov.au/scripts/Logon.asp?N=guest')
-    browser.select_form('form[id="t"]')
-    browser.submit_selected()
+    # browser.select_form('form[id="t"]')
+    # browser.submit_selected()
     return browser
 
 def get_date_digitised(result):
