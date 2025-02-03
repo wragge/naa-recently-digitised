@@ -20,8 +20,10 @@ def get_date_digitised(result):
     Generate a formatted date from the date digitised string (eg 'Digitised 1 days ago')
     '''
     when_digitised = result.find('div', class_='card-footer card-footer-list').span.string.strip()
-    interval, unit = re.search(r'^Digitised (\d+) (hours|days) ago', when_digitised).groups()
-    if unit == 'days':
+    interval, unit = re.search(r'^Digitised (\d+) (minutes|hours|days) ago', when_digitised).groups()
+    if unit == 'minutes':
+        date_digitised = arrow.now('Australia/Sydney').shift(minutes=-(int(interval)))
+    elif unit == 'days':
         date_digitised = arrow.now('Australia/Sydney').shift(days=-(int(interval)))
     elif unit == 'hours':
         date_digitised = arrow.now('Australia/Sydney').shift(hours=-(int(interval)))
