@@ -88,8 +88,21 @@ def harvest_recently_digitised():
         browser.form.set('ctl00$ContentPlaceHolderSNR$listPagerTop$ctl00$ctl02.y', '10', force=True)
         browser.submit_selected()
 
+        # When there are errors here to to website problems, try substituting the code below to get as much as possible.
+        # Also set the number of results per page as low as possible.
         start, end, total = get_number_of_results(browser.page)
         records += get_records_from_page(browser.page)
+
+        """"
+        try:
+            start, end, total = get_number_of_results(browser.page)
+        except AttributeError:
+            print(f"failure at {end}")
+            end = total
+        else:
+            print(end, total)
+            records += get_records_from_page(browser.page)
+        """
         time.sleep(1)
     return records
 

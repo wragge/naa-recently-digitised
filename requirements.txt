@@ -1,3 +1,0 @@
-MechanicalSoup
-pandas
-arrow
