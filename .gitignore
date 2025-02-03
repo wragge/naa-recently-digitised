@@ -1,2 +1,4 @@
 .DS_Store
 .python-version
+*.sqlite
+.ipynb_checkpoints/

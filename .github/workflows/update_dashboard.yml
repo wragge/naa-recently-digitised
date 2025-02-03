@@ -1,0 +1,33 @@
+name: Update dashboard
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["Scrape latest data"]
+    types:
+      - completed
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out this repo
+      uses: actions/checkout@v4
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+    - name: Install Python dependencies
+      uses: py-actions/py-dependency-install@v4
+      with:
+        path: 'requirements.txt'
+    - name: Update dashboard
+      run: jupyter nbconvert --no-input --execute digitisation_dashboard.ipynb --to html --template=material --output=docs/index.html
+    - name: Commit and push if it changed
+      run: |-
+        git config user.name 'Automated'
+        git config user.email 'actions@users.noreply.github.com'
+        git add -A
+        timestamp=$(date -u)
+        git commit -m "Latest snapshot: ${timestamp}" || exit 0
+        git push
